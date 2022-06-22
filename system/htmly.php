@@ -154,16 +154,16 @@ post('/login', function () {
     } else {
         $message['error'] = '';
         if (empty($user)) {
-            $message['error'] .= '<li class="alert alert-danger">User field is required.</li>';
+            $message['error'] .= '<li class="alert alert-danger">' . i18n('User_Error') . '</li>';
         }
         if (empty($pass)) {
-            $message['error'] .= '<li class="alert alert-danger">Password field is required.</li>';
+            $message['error'] .= '<li class="alert alert-danger">' . i18n('Pass_Error') . '</li>';
         }
         if (!$proper) {
-            $message['error'] .= '<li class="alert alert-danger">CSRF Token not correct.</li>';
+            $message['error'] .= '<li class="alert alert-danger">' . i18n('Token_Error') . '</li>';
         }
         if (!$captcha) {
-            $message['error'] .= '<li class="alert alert-danger">reCaptcha not correct.</li>';
+            $message['error'] .= '<li class="alert alert-danger">' . i18n('Captcha_Error') . '</li>';
         }
 
         config('views.root', 'system/admin/views');
@@ -1667,7 +1667,7 @@ get('/admin/categories/:category', function ($category) {
                 $perpage = 10;    
             }
 
-            $posts = get_category($category, $page, $perpage);
+            $posts = get_category($category, $page, $perpage, false);
             
             $desc = get_category_info($category);
             
@@ -1731,7 +1731,7 @@ get('/category/:category', function ($category) {
         $perpage = 10;    
     }
 
-    $posts = get_category($category, $page, $perpage);
+    $posts = get_category($category, $page, $perpage, false);
     
     $desc = get_category_info($category);
     
@@ -2149,10 +2149,10 @@ get('/search/:keyword', function ($keyword) {
     if (!$posts || $page < 1) {
         // a non-existing page or no search result
         render('404-search', array(
-            'title' => 'Search results not found! - ' . blog_title(),
-            'description' => 'Search results not found!',
+            'title' => i18n('Search_results_not_found') . ' - ' . blog_title(),
+            'description' => i18n('Search_results_not_found'),
             'search' => $tsearch,
-            'breadcrumb' => '<a href="' . site_url() . '">' . config('breadcrumb.home') . '</a> &#187; No search results',
+            'breadcrumb' => '<a href="' . site_url() . '">' . config('breadcrumb.home') . '</a> &#187; ' . i18n('No_search_results'),
             'canonical' => site_url(),
             'bodyclass' => 'error-404-search',
             'is_404search' => true,
